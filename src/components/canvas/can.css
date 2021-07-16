@@ -6,19 +6,3 @@
     width: 100%;
     overflow: hidden; */
   }
-  
-  div {
-    margin: 0%;
-    padding: 0%;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-    background-color: lightblue;
-  }
-  
-  canvas {
-    height: 100%;
-    width: 100%;
-  }
-  

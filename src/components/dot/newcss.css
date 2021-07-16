@@ -1,0 +1,13 @@
+#circle {
+    position: fixed;
+  
+    width: 30px;
+    height: 30px;
+  
+    background: lightblue;
+    transform: translate(-50%,-50%)
+  }
+  * {
+    background-color: antiquewhite;
+  }
+  

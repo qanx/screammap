@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState,useCallback } from "react";
 import "./can.css";
 const Canvas = () => {
   const [bg, setBg] = useState(null);
-  const [cor,setCor]=useState();
   const canvas = useRef(null);
+  const [coords, setCoords] = useState([]);
+
   //on load only once if [] ealse keep update if changes
 
   useEffect(() => {
@@ -13,25 +14,43 @@ const Canvas = () => {
   }, []);
 
     
+  // Event handler utilizing useCallback ...
+  // ... so that reference never changes.
+//   const handler = useCallback(
+//     (e ) => {
+//       // Update coordinates
+//       let x = (e.pageX * 100) / window.innerWidth;
+//       let y = (e.pageY * 100) / window.innerHeight;
+//       setCoords([x]);
+//       console.info(coords)
+//     },
+//     [setCoords,coords]
+//   );
+  
   
   const getPos = (e) => {
     let x = (e.pageX * 100) / window.innerWidth;
     let y = (e.pageY * 100) / window.innerHeight;
     console.log(x + "% - " + y);
-    setCor( [...cor, {"x":3}])
-    console.log(cor) 
+    setCoords([...coords,[y,x]])
+    let ccc=canvas.current.getContext("2d")
+    ccc.fillRect(6,6,10,10)
+    ccc.drawImage(bg, 0, 0, x, y);
+    console.info(coords) 
     
   };
+
+
   useEffect(() => {
     if (bg && canvas) {
       const ctx = canvas.current.getContext("2d");
       ctx.fillStyle = "black";
       ctx.drawImage(bg, 0, 0, window.innerWidth, window.innerHeight);
-      canvas.current.addEventListener("click", getPos);
-
+    //   canvas.current.addEventListener("click", getPos);
+        
        ctx.fillRect(6,6,10,10)
     }
-  }, [bg, canvas]);
+  }, [bg, canvas,coords]);
 
   return (
     <div>
@@ -39,6 +58,9 @@ const Canvas = () => {
         width={window.innerWidth}
         height={window.innerHeight}
         ref={canvas}
+        onMouseDown={
+            getPos
+        }
       />
     </div>
   );
